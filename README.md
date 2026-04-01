@@ -10,5 +10,5 @@ This project uses:
 - Mogra font — SIL Open Font License (OFL) Google Fonts 
 - Font Awesome Free icons — Free for personal and commercial use (CC BY 4.0) Font Awesome
 
-License
+#### License
 - All code in this project is licensed under GPL-3.0
