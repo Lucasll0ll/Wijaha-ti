@@ -59,7 +59,7 @@ const CategorySection = () => {
                 <h3 className="text-2xl font-bold text-gray-800 mb-3">{place.name}</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">{place.description}</p>
                 <div className="text-md text-blue-700 font-semibold space-y-2">
-                    <p> الموقع: {place.address}</p>
+                    <a href={place.address}> الموقع: اضغط هنا</a>
                     {place.phone && <p> التواصل: {place.phone}</p>}
                 </div>
               </div>
