@@ -45,16 +45,17 @@ function Header() {
         </button>
 
         <ul className="hidden md:flex items-center gap-8 text-black font-medium">
+             <li>
+            <a href="#Tell" className="hover:text-blue-600 transition">
+              Tell US
+            </a>
+          </li>
           <li>
             <a href="/#About" className="hover:text-blue-600 transition">
               About
             </a>
           </li>
-          <li>
-            <a href="#Tell" className="hover:text-blue-600 transition">
-              Tell US
-            </a>
-          </li>
+       
           <li>
             <a href="/#Category" className="hover:text-blue-600 transition">
               Category
