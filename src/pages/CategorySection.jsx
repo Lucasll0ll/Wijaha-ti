@@ -98,7 +98,7 @@ const CategorySection = () => {
           places.map((place) => (
             <div
               key={place.id}
-              className="p-6 bg-white shadow-xl rounded-2xl border-t-4 border-gray-500/20"
+              className="p-6 bg-primary/50 shadow-xl rounded-2xl border-t-4 border-secondary/45 "
             >
               <h3 className="text-2xl font-bold text-gray-800 mb-3">
                 {place.name}
@@ -127,7 +127,7 @@ const CategorySection = () => {
 
       <button
         onClick={() => navigate("/")}
-        className="mt-12 block mx-auto px-8 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-all"
+        className="mt-12 block mx-auto px-8 py-3 bg-primary/50 text-white rounded-full hover:bg-gray-700 transition-all"
       >
         العودة للتصنيفات
       </button>
