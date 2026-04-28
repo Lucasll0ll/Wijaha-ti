@@ -5,6 +5,7 @@ import Card from "../components/Card";
 import Section from "../components/Section";
 import { CATEGORIES_DATA } from "../constants/category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion"; 
 
 const CategorySection = () => {
   const { id } = useParams();
@@ -15,9 +16,10 @@ const CategorySection = () => {
   const getUserLocation = () => {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
+        window.alert("المتصفح لا يدعم تحديد الموقع");
         reject(new Error("المتصفح لا يدعم تحديد الموقع"));
+        return;
       }
-      // وضعنا مهلة زمنية 5 ثوانٍ حتى لا يظل المستخدم عالقاً إذا لم يستجب المتصفح
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         timeout: 5000,
       });
@@ -26,7 +28,6 @@ const CategorySection = () => {
 
   const getPlacesFromDB = async (categoryId) => {
     setLoading(true);
-
     let userLat = null;
     let userLng = null;
 
@@ -34,26 +35,19 @@ const CategorySection = () => {
       const position = await getUserLocation();
       userLat = position.coords.latitude;
       userLng = position.coords.longitude;
-      console.log("تم تحديد موقع المستخدم بنجاح");
     } catch (err) {
-      console.warn(
-        "فشل الحصول على الموقع، سيتم عرض النتائج الافتراضية:",
-        err.message,
-      );
+      console.warn("فشل الحصول على الموقع:", err.message);
     }
 
     try {
-      console.log("جلب البيانات من Supabase...");
-
       const { data, error } = await supabase.rpc(
         "get_closest_places_by_category",
         {
           category_id: parseInt(categoryId),
           user_lat: userLat,
           user_lng: userLng,
-        },
+        }
       );
-
       if (error) throw error;
       setPlaces(data || []);
     } catch (err) {
@@ -96,9 +90,16 @@ const CategorySection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {!loading &&
           places.map((place) => (
-            <div
+            <motion.div
               key={place.id}
-              className="p-6 bg-primary/50 shadow-xl rounded-2xl border-t-4 border-secondary/45 "
+              // --- هنا الأنميشن فقط ---
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+            
+              className="p-6 bg-primary/50 shadow-xl rounded-2xl border-t-4 border-secondary/45"
             >
               <h3 className="text-2xl font-bold text-gray-800 mb-3">
                 {place.name}
@@ -108,12 +109,11 @@ const CategorySection = () => {
               </p>
               <div className="text-md text-blue-700 font-semibold space-y-2">
                 <a href={place.address} target="_blank" rel="noreferrer">
-                  {" "}
                   الموقع: اضغط هنا
                 </a>
                 {place.phone && <p> التواصل: {place.phone}</p>}
               </div>
-            </div>
+            </motion.div>
           ))}
       </div>
 
